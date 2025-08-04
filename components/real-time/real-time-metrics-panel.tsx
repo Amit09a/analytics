@@ -59,19 +59,19 @@ export function RealTimeMetricsPanel({ className = "" }: RealTimeMetricsPanelPro
 
   return (
     <Card className={`transition-all duration-300 hover:shadow-lg ${className}`}>
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-3 p-4 sm:p-6">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <CardTitle className="text-lg font-semibold flex items-center gap-2">
+            <CardTitle className="text-base sm:text-lg font-semibold flex items-center gap-2">
               {isConnected ? <Wifi className="h-4 w-4 text-green-500" /> : <WifiOff className="h-4 w-4 text-red-500" />}
               Real-Time Activity
             </CardTitle>
-            <CardDescription className="text-sm">
+            <CardDescription className="text-xs sm:text-sm">
               {isConnected ? "Live updates" : "Disconnected"} •{" "}
               {lastUpdate && `Updated ${new Date(lastUpdate).toLocaleTimeString()}`}
             </CardDescription>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             <Button variant="ghost" size="sm" onClick={toggleUpdates}>
               {isConnected ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
             </Button>
@@ -82,26 +82,26 @@ export function RealTimeMetricsPanel({ className = "" }: RealTimeMetricsPanelPro
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6">
         {/* Real-time metrics */}
         {metrics && (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <div className="text-center p-3 rounded-lg bg-muted/30">
-              <div className="text-2xl font-bold text-primary">{metrics.activeUsers}</div>
-              <div className="text-xs text-muted-foreground">Active Users</div>
-            </div>
-            <div className="text-center p-3 rounded-lg bg-muted/30">
-              <div className="text-2xl font-bold text-green-600">{formatters.currency(metrics.currentRevenue)}</div>
-              <div className="text-xs text-muted-foreground">Revenue Today</div>
-            </div>
-            <div className="text-center p-3 rounded-lg bg-muted/30">
-              <div className="text-2xl font-bold text-blue-600">{metrics.conversionRate}%</div>
-              <div className="text-xs text-muted-foreground">Conversion Rate</div>
-            </div>
-            <div className="text-center p-3 rounded-lg bg-muted/30">
-              <div className="text-2xl font-bold text-purple-600">{metrics.avgSessionDuration}</div>
-              <div className="text-xs text-muted-foreground">Avg. Session</div>
-            </div>
+          <div className="grid grid-cols-2 gap-2 sm:gap-3">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="text-center p-2 sm:p-3 rounded-lg bg-muted/30">
+                <div className="text-lg sm:text-xl md:text-2xl font-bold text-primary">
+                  {i === 0 && metrics.activeUsers}
+                  {i === 1 && formatters.currency(metrics.currentRevenue)}
+                  {i === 2 && `${metrics.conversionRate}%`}
+                  {i === 3 && metrics.avgSessionDuration}
+                </div>
+                <div className="text-xs text-muted-foreground leading-tight">
+                  {i === 0 && "Active Users"}
+                  {i === 1 && "Revenue Today"}
+                  {i === 2 && "Conversion Rate"}
+                  {i === 3 && "Avg. Session"}
+                </div>
+              </div>
+            ))}
           </div>
         )}
 
@@ -110,21 +110,21 @@ export function RealTimeMetricsPanel({ className = "" }: RealTimeMetricsPanelPro
         {/* Activity feed */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <h4 className="text-sm font-medium">Live Activity Feed</h4>
+            <h4 className="text-sm font-medium">Live Activity</h4>
             <Badge variant="secondary" className="text-xs">
               {activities.length} activities
             </Badge>
           </div>
 
-          <ScrollArea className="h-64 w-full rounded-md border p-2">
+          <ScrollArea className="h-48 sm:h-64 w-full rounded-md border p-2">
             <div className="space-y-2">
               {activities.length === 0 ? (
-                <div className="text-center text-muted-foreground text-sm py-8">No recent activity</div>
+                <div className="text-center text-muted-foreground text-xs sm:text-sm py-6 sm:py-8">No recent activity</div>
               ) : (
                 activities.map((activity, index) => (
                   <div
                     key={activity.id}
-                    className={`flex items-start gap-3 p-2 rounded-lg transition-all duration-300 ${
+                    className={`flex items-start gap-2 sm:gap-3 p-2 rounded-lg transition-all duration-300 ${
                       index === 0 ? "bg-primary/5 border border-primary/20" : "hover:bg-muted/50"
                     }`}
                     style={{
@@ -134,17 +134,17 @@ export function RealTimeMetricsPanel({ className = "" }: RealTimeMetricsPanelPro
                     <div className="flex-shrink-0 mt-0.5">{getActivityIcon(activity.type)}</div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="text-sm font-medium capitalize">{activity.type}</span>
+                        <span className="text-xs sm:text-sm font-medium capitalize">{activity.type}</span>
                         {activity.value && (
                           <Badge variant="outline" className="text-xs">
                             {formatters.currency(activity.value)}
                           </Badge>
                         )}
                       </div>
-                      <p className="text-xs text-muted-foreground mb-1">{activity.description}</p>
+                      <p className="text-xs text-muted-foreground mb-1 leading-tight">{activity.description}</p>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <span>{activity.location}</span>
-                        <span>•</span>
+                        <span className="truncate">{activity.location}</span>
+                        <span className="hidden sm:inline">•</span>
                         <span>{activity.channel}</span>
                         <span>•</span>
                         <span>{new Date(activity.timestamp).toLocaleTimeString()}</span>

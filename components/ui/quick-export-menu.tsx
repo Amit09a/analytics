@@ -83,18 +83,19 @@ export function QuickExportMenu({ campaigns, metrics, timeSeriesData, className 
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="sm" className={className}>
           <Download className="h-4 w-4 mr-2" />
-          Quick Export
+          <span className="hidden sm:inline">Quick Export</span>
+          <span className="sm:hidden">Export</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
+      <DropdownMenuContent align="end" className="w-56 sm:w-64">
         <DropdownMenuLabel>Export Options</DropdownMenuLabel>
         <DropdownMenuSeparator />
 
         <DropdownMenuItem onClick={() => handleQuickExport("full", "csv")} disabled={isExporting !== null}>
           <Table className="h-4 w-4 mr-2 text-green-600" />
           <div className="flex-1">
-            <div className="font-medium">Full Dashboard (CSV)</div>
-            <div className="text-xs text-muted-foreground">All data in spreadsheet format</div>
+            <div className="font-medium text-sm">Full Dashboard (CSV)</div>
+            <div className="text-xs text-muted-foreground hidden sm:block">All data in spreadsheet format</div>
           </div>
           {isLoading("full", "csv") && (
             <div className="h-4 w-4 animate-spin border-2 border-primary border-t-transparent rounded-full ml-2" />
@@ -104,8 +105,8 @@ export function QuickExportMenu({ campaigns, metrics, timeSeriesData, className 
         <DropdownMenuItem onClick={() => handleQuickExport("full", "pdf")} disabled={isExporting !== null}>
           <FileText className="h-4 w-4 mr-2 text-red-600" />
           <div className="flex-1">
-            <div className="font-medium">Full Dashboard (PDF)</div>
-            <div className="text-xs text-muted-foreground">Formatted report document</div>
+            <div className="font-medium text-sm">Full Dashboard (PDF)</div>
+            <div className="text-xs text-muted-foreground hidden sm:block">Formatted report document</div>
           </div>
           {isLoading("full", "pdf") && (
             <div className="h-4 w-4 animate-spin border-2 border-primary border-t-transparent rounded-full ml-2" />
@@ -117,7 +118,7 @@ export function QuickExportMenu({ campaigns, metrics, timeSeriesData, className 
         <DropdownMenuItem onClick={() => handleQuickExport("campaigns", "csv")} disabled={isExporting !== null}>
           <BarChart3 className="h-4 w-4 mr-2 text-purple-600" />
           <div className="flex-1">
-            <div className="font-medium">Campaigns Only</div>
+            <div className="font-medium text-sm">Campaigns Only</div>
             <div className="text-xs text-muted-foreground">{campaigns.length} campaigns</div>
           </div>
           {isLoading("campaigns", "csv") && (
@@ -128,7 +129,7 @@ export function QuickExportMenu({ campaigns, metrics, timeSeriesData, className 
         <DropdownMenuItem onClick={() => handleQuickExport("metrics", "csv")} disabled={isExporting !== null}>
           <TrendingUp className="h-4 w-4 mr-2 text-blue-600" />
           <div className="flex-1">
-            <div className="font-medium">Metrics Only</div>
+            <div className="font-medium text-sm">Metrics Only</div>
             <div className="text-xs text-muted-foreground">{metrics.length} metrics</div>
           </div>
           {isLoading("metrics", "csv") && (
@@ -139,7 +140,7 @@ export function QuickExportMenu({ campaigns, metrics, timeSeriesData, className 
         <DropdownMenuItem onClick={() => handleQuickExport("timeseries", "csv")} disabled={isExporting !== null}>
           <Calendar className="h-4 w-4 mr-2 text-orange-600" />
           <div className="flex-1">
-            <div className="font-medium">Time Series Data</div>
+            <div className="font-medium text-sm">Time Series Data</div>
             <div className="text-xs text-muted-foreground">{timeSeriesData.length} data points</div>
           </div>
           {isLoading("timeseries", "csv") && (

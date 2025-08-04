@@ -57,16 +57,16 @@ export function LiveCampaignsTable({ campaigns: initialCampaigns, className = ""
 
   return (
     <Card className={`transition-all duration-300 hover:shadow-lg ${className}`}>
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-3 p-4 sm:p-6">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <CardTitle className="text-lg font-semibold flex items-center gap-2">
+            <CardTitle className="text-base sm:text-lg font-semibold flex items-center gap-2">
               <Activity className={`h-4 w-4 ${isEnabled ? "animate-pulse text-green-500" : "text-muted-foreground"}`} />
               Live Campaign Performance
             </CardTitle>
-            <CardDescription>Real-time campaign metrics and updates</CardDescription>
+            <CardDescription className="text-xs sm:text-sm">Real-time campaign metrics and updates</CardDescription>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             <Badge variant={isEnabled ? "default" : "secondary"} className="text-xs">
               {isEnabled ? "Live Updates" : "Paused"}
             </Badge>
@@ -77,19 +77,19 @@ export function LiveCampaignsTable({ campaigns: initialCampaigns, className = ""
         </div>
       </CardHeader>
 
-      <CardContent>
-        <div className="rounded-lg border overflow-hidden">
+      <CardContent className="p-4 sm:p-6">
+        <div className="rounded-lg border overflow-hidden overflow-x-auto">
           <Table>
             <TableHeader className="bg-muted/30">
               <TableRow>
-                <TableHead className="font-semibold">Campaign</TableHead>
-                <TableHead className="font-semibold">Status</TableHead>
-                <TableHead className="text-right font-semibold">Spent</TableHead>
-                <TableHead className="text-right font-semibold">Impressions</TableHead>
-                <TableHead className="text-right font-semibold">Clicks</TableHead>
-                <TableHead className="text-right font-semibold">Conversions</TableHead>
-                <TableHead className="text-right font-semibold">CTR</TableHead>
-                <TableHead className="text-right font-semibold">ROAS</TableHead>
+                <TableHead className="font-semibold text-xs sm:text-sm min-w-[180px]">Campaign</TableHead>
+                <TableHead className="font-semibold text-xs sm:text-sm min-w-[80px]">Status</TableHead>
+                <TableHead className="text-right font-semibold text-xs sm:text-sm min-w-[90px]">Spent</TableHead>
+                <TableHead className="text-right font-semibold text-xs sm:text-sm min-w-[100px] hidden sm:table-cell">Impressions</TableHead>
+                <TableHead className="text-right font-semibold text-xs sm:text-sm min-w-[80px] hidden md:table-cell">Clicks</TableHead>
+                <TableHead className="text-right font-semibold text-xs sm:text-sm min-w-[100px] hidden md:table-cell">Conversions</TableHead>
+                <TableHead className="text-right font-semibold text-xs sm:text-sm min-w-[60px] hidden lg:table-cell">CTR</TableHead>
+                <TableHead className="text-right font-semibold text-xs sm:text-sm min-w-[70px]">ROAS</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -104,39 +104,39 @@ export function LiveCampaignsTable({ campaigns: initialCampaigns, className = ""
                 >
                   <TableCell className="font-medium">
                     <div className="flex items-center gap-2">
-                      <span className={isRecentlyUpdated(campaign.name) ? "font-semibold" : ""}>{campaign.name}</span>
+                      <span className={`text-sm ${isRecentlyUpdated(campaign.name) ? "font-semibold" : ""}`}>{campaign.name}</span>
                       {isRecentlyUpdated(campaign.name) && (
                         <Badge variant="outline" className="text-xs animate-bounce">
                           Updated
                         </Badge>
                       )}
                     </div>
-                    <div className="text-xs text-muted-foreground">{campaign.channel}</div>
+                    <div className="text-xs text-muted-foreground mt-1">{campaign.channel}</div>
                   </TableCell>
                   <TableCell>{getStatusBadge(campaign.status)}</TableCell>
                   <TableCell className="text-right font-mono">
-                    <div className={isRecentlyUpdated(campaign.name) ? "font-semibold text-primary" : ""}>
+                    <div className={`text-sm ${isRecentlyUpdated(campaign.name) ? "font-semibold text-primary" : ""}`}>
                       {formatters.currency(campaign.spent)}
                     </div>
-                    <div className="text-xs text-muted-foreground">of {formatters.currency(campaign.budget)}</div>
+                    <div className="text-xs text-muted-foreground mt-1">of {formatters.currency(campaign.budget)}</div>
                   </TableCell>
-                  <TableCell className="text-right font-mono">
+                  <TableCell className="text-right font-mono text-sm hidden sm:table-cell">
                     <div className={isRecentlyUpdated(campaign.name) ? "font-semibold text-primary" : ""}>
                       {formatters.number(campaign.impressions)}
                     </div>
                   </TableCell>
-                  <TableCell className="text-right font-mono">
+                  <TableCell className="text-right font-mono text-sm hidden md:table-cell">
                     <div className={isRecentlyUpdated(campaign.name) ? "font-semibold text-primary" : ""}>
                       {formatters.number(campaign.clicks)}
                     </div>
                   </TableCell>
-                  <TableCell className="text-right font-mono">
+                  <TableCell className="text-right font-mono text-sm hidden md:table-cell">
                     <div className={isRecentlyUpdated(campaign.name) ? "font-semibold text-primary" : ""}>
                       {formatters.number(campaign.conversions)}
                     </div>
                   </TableCell>
-                  <TableCell className="text-right font-mono">{formatters.percentage(campaign.ctr)}</TableCell>
-                  <TableCell className="text-right font-mono">
+                  <TableCell className="text-right font-mono text-sm hidden lg:table-cell">{formatters.percentage(campaign.ctr)}</TableCell>
+                  <TableCell className="text-right font-mono text-sm">
                     <div className={`flex items-center justify-end gap-1 ${getROASColor(campaign.roas)}`}>
                       <span className="font-semibold">{campaign.roas.toFixed(1)}x</span>
                       {getROASTrend(campaign.roas)}
@@ -150,10 +150,10 @@ export function LiveCampaignsTable({ campaigns: initialCampaigns, className = ""
 
         {/* Update info */}
         <div className="flex items-center justify-between mt-4 text-xs text-muted-foreground">
-          <span>
+          <span className="truncate">
             {recentUpdates.length > 0 ? `${recentUpdates.length} campaigns updated recently` : "No recent updates"}
           </span>
-          <span>Updates every 12 seconds</span>
+          <span className="whitespace-nowrap ml-2">Updates every 12s</span>
         </div>
       </CardContent>
     </Card>

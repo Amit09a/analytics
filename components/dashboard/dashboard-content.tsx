@@ -88,19 +88,19 @@ export function DashboardContent() {
 
       <header className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-2 border-b bg-background/80 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 px-4 transition-all duration-300 shadow-sm">
         <SidebarTrigger className="-ml-1 transition-all duration-200 hover:scale-110" />
-        <div className="flex flex-1 items-center gap-2">
+        <div className="flex flex-1 items-center gap-2 min-w-0">
           <div className="relative flex-1 max-w-md group">
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground transition-colors group-focus-within:text-primary" />
             <Input
               placeholder="Search campaigns, metrics..."
-              className="pl-8 transition-all duration-200 focus:ring-2 focus:ring-primary/20 bg-background/70 backdrop-blur-sm border-border/50"
+              className="pl-8 transition-all duration-200 focus:ring-2 focus:ring-primary/20 bg-background/70 backdrop-blur-sm border-border/50 text-sm"
             />
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 md:gap-2">
           {/* Data freshness indicator */}
           {lastUpdated && (
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <div className="hidden sm:flex items-center gap-2 text-xs text-muted-foreground">
               <div className={`h-2 w-2 rounded-full ${isStale ? "bg-yellow-500" : "bg-green-500"} animate-pulse`} />
               <span>Updated {formatters.dateTime(lastUpdated)}</span>
             </div>
@@ -108,7 +108,7 @@ export function DashboardContent() {
 
           {/* Real-time metrics badge */}
           {realTimeMetrics && (
-            <Badge variant="outline" className="text-xs animate-pulse">
+            <Badge variant="outline" className="text-xs animate-pulse hidden sm:inline-flex">
               🔴 {realTimeMetrics.activeUsers} live
             </Badge>
           )}
@@ -117,11 +117,12 @@ export function DashboardContent() {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="outline"
-                size="sm"
+                size="sm" 
                 className="transition-all duration-200 hover:scale-105 hover:shadow-md bg-background/70 backdrop-blur-sm border-border/50"
               >
                 <Calendar className="h-4 w-4 mr-2" />
-                Last 30 days
+                <span className="hidden sm:inline">Last 30 days</span>
+                <span className="sm:hidden">30d</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent
@@ -143,7 +144,7 @@ export function DashboardContent() {
             className="transition-all duration-200 hover:scale-105 hover:shadow-md bg-background/70 backdrop-blur-sm border-border/50"
           >
             <RefreshCw className={`h-4 w-4 mr-2 ${loading ? "animate-spin" : ""}`} />
-            Refresh
+            <span className="hidden sm:inline">Refresh</span>
           </Button>
 
           {/* Export Options */}
@@ -151,7 +152,7 @@ export function DashboardContent() {
             campaigns={campaigns}
             metrics={metrics}
             timeSeriesData={timeSeriesData}
-            className="transition-all duration-200 hover:scale-105 hover:shadow-md bg-background/70 backdrop-blur-sm border-border/50"
+            className="transition-all duration-200 hover:scale-105 hover:shadow-md bg-background/70 backdrop-blur-sm border-border/50 hidden sm:flex"
           />
 
           <Button variant="ghost" size="sm" className="relative transition-all duration-200 hover:scale-110">
@@ -162,20 +163,20 @@ export function DashboardContent() {
         </div>
       </header>
 
-      <main className="relative z-10 flex-1 space-y-8 p-4 md:p-6 animate-fade-in overflow-x-hidden">
+      <main className="relative z-10 flex-1 space-y-6 md:space-y-8 p-3 sm:p-4 md:p-6 animate-fade-in overflow-x-hidden">
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <h1 className="text-2xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent drop-shadow-sm">
+            <h1 className="text-xl sm:text-2xl md:text-4xl font-bold tracking-tight bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent drop-shadow-sm">
               Dashboard Overview
             </h1>
-            <Sparkles className="h-5 w-5 md:h-6 md:w-6 text-primary animate-pulse-subtle drop-shadow-sm" />
+            <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-primary animate-pulse-subtle drop-shadow-sm" />
           </div>
           <div className="flex items-center gap-4">
-            <p className="text-base md:text-lg text-muted-foreground/90 drop-shadow-sm">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground/90 drop-shadow-sm">
               Welcome back! Here's what's happening with your campaigns today.
             </p>
             {derivedMetrics.totalCampaigns > 0 && (
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <div className="hidden sm:flex items-center gap-2 text-sm text-muted-foreground">
                 <Badge variant="secondary">{derivedMetrics.activeCampaigns} active campaigns</Badge>
                 <Badge variant="outline">{formatters.currency(derivedMetrics.totalSpent)} spent</Badge>
               </div>
@@ -184,14 +185,14 @@ export function DashboardContent() {
         </div>
 
         {/* Tabs for different views */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 lg:w-[400px]">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4 md:space-y-6">
+          <TabsList className="grid w-full grid-cols-3 max-w-md mx-auto sm:mx-0 lg:w-[400px]">
             <TabsTrigger value="overview">Overview</TabsTrigger>
             <TabsTrigger value="realtime">Real-Time</TabsTrigger>
             <TabsTrigger value="campaigns">Campaigns</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="overview" className="space-y-8">
+          <TabsContent value="overview" className="space-y-6 md:space-y-8">
             <section className="animate-slide-up" style={{ animationDelay: "0.1s" }}>
               <MetricsSection metrics={metrics} loading={false} />
             </section>
@@ -205,8 +206,8 @@ export function DashboardContent() {
             </section>
           </TabsContent>
 
-          <TabsContent value="realtime" className="space-y-8">
-            <div className="grid gap-6 lg:grid-cols-2">
+          <TabsContent value="realtime" className="space-y-6 md:space-y-8">
+            <div className="grid gap-4 md:gap-6 lg:grid-cols-2">
               <section className="animate-slide-up" style={{ animationDelay: "0.1s" }}>
                 <RealTimeMetricsPanel />
               </section>
@@ -221,7 +222,7 @@ export function DashboardContent() {
             </section>
           </TabsContent>
 
-          <TabsContent value="campaigns" className="space-y-8">
+          <TabsContent value="campaigns" className="space-y-6 md:space-y-8">
             <section className="animate-slide-up" style={{ animationDelay: "0.1s" }}>
               <LiveCampaignsTable campaigns={campaigns} />
             </section>

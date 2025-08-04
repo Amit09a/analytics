@@ -109,22 +109,22 @@ export function CampaignsTable({ campaigns, loading }: CampaignsTableProps) {
   return (
     <Card className="transition-all duration-300 hover:shadow-2xl border-0 bg-card/80 backdrop-blur-md supports-[backdrop-filter]:bg-card/60">
       <div className="absolute inset-0 bg-gradient-to-br from-background/10 to-transparent rounded-lg" />
-      <CardHeader className="space-y-2 relative z-10">
-        <CardTitle className="text-2xl font-semibold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+      <CardHeader className="space-y-2 relative z-10 p-4 sm:p-6">
+        <CardTitle className="text-xl sm:text-2xl font-semibold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
           Campaign Performance
         </CardTitle>
-        <CardDescription className="text-base">Detailed view of all your marketing campaigns</CardDescription>
+        <CardDescription className="text-sm sm:text-base">Detailed view of all your marketing campaigns</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-6 relative z-10">
-        <div className="flex items-center justify-between space-x-4 py-4">
-          <div className="flex items-center space-x-3">
+      <CardContent className="space-y-4 sm:space-y-6 relative z-10 p-4 sm:p-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-3 sm:space-y-0 sm:space-x-4 py-2 sm:py-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full sm:w-auto">
             <div className="relative group">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
               <Input
                 placeholder="Search campaigns..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 max-w-sm transition-all duration-200 focus:ring-2 focus:ring-primary/20 hover:shadow-md bg-background/50 backdrop-blur-sm"
+                className="pl-10 w-full sm:max-w-sm transition-all duration-200 focus:ring-2 focus:ring-primary/20 hover:shadow-md bg-background/50 backdrop-blur-sm text-sm"
               />
             </div>
             <DropdownMenu>
@@ -132,7 +132,7 @@ export function CampaignsTable({ campaigns, loading }: CampaignsTableProps) {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="transition-all duration-200 hover:scale-105 hover:shadow-md bg-background/50 backdrop-blur-sm"
+                  className="transition-all duration-200 hover:scale-105 hover:shadow-md bg-background/50 backdrop-blur-sm w-full sm:w-auto"
                 >
                   <Filter className="mr-2 h-4 w-4" />
                   Status
@@ -155,36 +155,36 @@ export function CampaignsTable({ campaigns, loading }: CampaignsTableProps) {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-          <div className="text-sm text-muted-foreground font-medium">
+          <div className="text-xs sm:text-sm text-muted-foreground font-medium">
             Showing {filteredData.length} of {campaigns.length} campaigns
           </div>
         </div>
 
-        <div className="rounded-xl border border-border/50 overflow-hidden shadow-lg bg-background/30 backdrop-blur-sm">
+        <div className="rounded-lg sm:rounded-xl border border-border/50 overflow-hidden shadow-lg bg-background/30 backdrop-blur-sm">
           <div className="overflow-x-auto">
             <Table>
               <TableHeader className="bg-muted/30 backdrop-blur-sm">
                 <TableRow className="hover:bg-muted/50 transition-colors">
-                  <TableHead>
+                  <TableHead className="min-w-[200px]">
                     <Button
                       variant="ghost"
                       onClick={() => handleSort("name")}
-                      className="h-auto p-0 font-semibold hover:text-primary transition-colors"
+                      className="h-auto p-0 font-semibold hover:text-primary transition-colors text-xs sm:text-sm"
                     >
                       Campaign
                       <ArrowUpDown className="ml-2 h-4 w-4" />
                     </Button>
                   </TableHead>
-                  <TableHead className="font-semibold">Channel</TableHead>
-                  <TableHead className="font-semibold">Status</TableHead>
-                  <TableHead className="text-right font-semibold">Budget</TableHead>
-                  <TableHead className="text-right font-semibold">Spent</TableHead>
-                  <TableHead className="text-right font-semibold">Impressions</TableHead>
-                  <TableHead className="text-right font-semibold">Clicks</TableHead>
-                  <TableHead className="text-right font-semibold">Conversions</TableHead>
-                  <TableHead className="text-right font-semibold">CTR</TableHead>
-                  <TableHead className="text-right font-semibold">CPC</TableHead>
-                  <TableHead className="text-right font-semibold">ROAS</TableHead>
+                  <TableHead className="font-semibold text-xs sm:text-sm min-w-[100px]">Channel</TableHead>
+                  <TableHead className="font-semibold text-xs sm:text-sm min-w-[80px]">Status</TableHead>
+                  <TableHead className="text-right font-semibold text-xs sm:text-sm min-w-[90px]">Budget</TableHead>
+                  <TableHead className="text-right font-semibold text-xs sm:text-sm min-w-[90px]">Spent</TableHead>
+                  <TableHead className="text-right font-semibold text-xs sm:text-sm min-w-[100px] hidden sm:table-cell">Impressions</TableHead>
+                  <TableHead className="text-right font-semibold text-xs sm:text-sm min-w-[80px] hidden md:table-cell">Clicks</TableHead>
+                  <TableHead className="text-right font-semibold text-xs sm:text-sm min-w-[100px] hidden md:table-cell">Conversions</TableHead>
+                  <TableHead className="text-right font-semibold text-xs sm:text-sm min-w-[60px] hidden lg:table-cell">CTR</TableHead>
+                  <TableHead className="text-right font-semibold text-xs sm:text-sm min-w-[60px] hidden lg:table-cell">CPC</TableHead>
+                  <TableHead className="text-right font-semibold text-xs sm:text-sm min-w-[70px]">ROAS</TableHead>
                   <TableHead className="w-[50px]"></TableHead>
                 </TableRow>
               </TableHeader>
@@ -197,20 +197,20 @@ export function CampaignsTable({ campaigns, loading }: CampaignsTableProps) {
                   >
                     <TableCell className="font-medium group-hover:text-primary transition-colors">
                       <div>
-                        <div className="font-semibold">{campaign.name}</div>
-                        <div className="text-xs text-muted-foreground">{campaign.objective}</div>
+                        <div className="font-semibold text-sm sm:text-base leading-tight">{campaign.name}</div>
+                        <div className="text-xs text-muted-foreground mt-1 hidden sm:block">{campaign.objective}</div>
                       </div>
                     </TableCell>
-                    <TableCell>{campaign.channel}</TableCell>
+                    <TableCell className="text-sm">{campaign.channel}</TableCell>
                     <TableCell>{getStatusBadge(campaign.status)}</TableCell>
-                    <TableCell className="text-right font-mono">{formatCurrency(campaign.budget)}</TableCell>
-                    <TableCell className="text-right font-mono">{formatCurrency(campaign.spent)}</TableCell>
-                    <TableCell className="text-right font-mono">{formatNumber(campaign.impressions)}</TableCell>
-                    <TableCell className="text-right font-mono">{formatNumber(campaign.clicks)}</TableCell>
-                    <TableCell className="text-right font-mono">{formatNumber(campaign.conversions)}</TableCell>
-                    <TableCell className="text-right font-mono">{campaign.ctr.toFixed(2)}%</TableCell>
-                    <TableCell className="text-right font-mono">${campaign.cpc.toFixed(2)}</TableCell>
-                    <TableCell className="text-right font-mono font-semibold text-green-600">
+                    <TableCell className="text-right font-mono text-sm">{formatCurrency(campaign.budget)}</TableCell>
+                    <TableCell className="text-right font-mono text-sm">{formatCurrency(campaign.spent)}</TableCell>
+                    <TableCell className="text-right font-mono text-sm hidden sm:table-cell">{formatNumber(campaign.impressions)}</TableCell>
+                    <TableCell className="text-right font-mono text-sm hidden md:table-cell">{formatNumber(campaign.clicks)}</TableCell>
+                    <TableCell className="text-right font-mono text-sm hidden md:table-cell">{formatNumber(campaign.conversions)}</TableCell>
+                    <TableCell className="text-right font-mono text-sm hidden lg:table-cell">{campaign.ctr.toFixed(2)}%</TableCell>
+                    <TableCell className="text-right font-mono text-sm hidden lg:table-cell">${campaign.cpc.toFixed(2)}</TableCell>
+                    <TableCell className="text-right font-mono font-semibold text-green-600 text-sm">
                       {campaign.roas.toFixed(1)}x
                     </TableCell>
                     <TableCell>

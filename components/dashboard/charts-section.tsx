@@ -249,37 +249,40 @@ export function ChartsSection({ timeSeriesData, loading, onRefresh }: ChartsSect
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 md:space-y-6">
       {/* Interactive Chart Section */}
       <ChartCard title={getChartTitle()} description={getChartDescription()} onRefresh={onRefresh}>
         {/* Chart Type Selector */}
-        <div className="flex items-center gap-2 mb-6 p-1 bg-muted/50 rounded-lg w-fit">
+        <div className="flex items-center gap-1 sm:gap-2 mb-4 md:mb-6 p-1 bg-muted/50 rounded-lg w-fit overflow-x-auto">
           <Button
             variant={activeChart === "line" ? "default" : "ghost"}
-            size="sm"
+            size="sm" 
             onClick={() => setActiveChart("line")}
-            className="transition-all duration-200"
+            className="transition-all duration-200 text-xs sm:text-sm whitespace-nowrap"
           >
-            <TrendingUp className="h-4 w-4 mr-2" />
-            Line Chart
+            <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+            <span className="hidden sm:inline">Line Chart</span>
+            <span className="sm:hidden">Line</span>
           </Button>
           <Button
             variant={activeChart === "bar" ? "default" : "ghost"}
             size="sm"
             onClick={() => setActiveChart("bar")}
-            className="transition-all duration-200"
+            className="transition-all duration-200 text-xs sm:text-sm whitespace-nowrap"
           >
-            <BarChart3 className="h-4 w-4 mr-2" />
-            Bar Chart
+            <BarChart3 className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+            <span className="hidden sm:inline">Bar Chart</span>
+            <span className="sm:hidden">Bar</span>
           </Button>
           <Button
             variant={activeChart === "pie" ? "default" : "ghost"}
             size="sm"
             onClick={() => setActiveChart("pie")}
-            className="transition-all duration-200"
+            className="transition-all duration-200 text-xs sm:text-sm whitespace-nowrap"
           >
-            <PieChart className="h-4 w-4 mr-2" />
-            Donut Chart
+            <PieChart className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+            <span className="hidden sm:inline">Donut Chart</span>
+            <span className="sm:hidden">Donut</span>
           </Button>
         </div>
 
@@ -287,12 +290,12 @@ export function ChartsSection({ timeSeriesData, loading, onRefresh }: ChartsSect
       </ChartCard>
 
       {/* Additional Charts Grid */}
-      <div className="grid gap-6 md:gap-8 lg:grid-cols-2">
+      <div className="grid gap-4 md:gap-6 lg:gap-8 lg:grid-cols-2">
         {/* Conversion Funnel Bar Chart */}
         <ChartCard title="Conversion Funnel" description="User journey through conversion stages">
-          <ChartContainer config={chartConfig} className="h-[300px] w-full bg-background/50 rounded-lg border p-4">
+          <ChartContainer config={chartConfig} className="h-[250px] sm:h-[300px] w-full bg-background/50 rounded-lg border p-2 sm:p-4">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={conversionFunnelData} margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
+              <BarChart data={conversionFunnelData} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
                 <defs>
                   <linearGradient id="funnelGradient" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="hsl(var(--chart-4))" stopOpacity={0.9} />
@@ -303,13 +306,18 @@ export function ChartsSection({ timeSeriesData, loading, onRefresh }: ChartsSect
                   dataKey="name"
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: "hsl(var(--foreground))", fontSize: 12 }}
+                  tick={{ fill: "hsl(var(--foreground))", fontSize: 10 }}
+                  interval={0}
+                  angle={-45}
+                  textAnchor="end"
+                  height={60}
                 />
                 <YAxis
                   axisLine={false}
                   tickLine={false}
-                  tick={{ fill: "hsl(var(--foreground))", fontSize: 12 }}
+                  tick={{ fill: "hsl(var(--foreground))", fontSize: 10 }}
                   tickFormatter={(value) => `${(value / 1000).toFixed(0)}k`}
+                  width={40}
                 />
                 <ChartTooltip
                   content={<ChartTooltipContent />}
@@ -330,18 +338,18 @@ export function ChartsSection({ timeSeriesData, loading, onRefresh }: ChartsSect
 
         {/* Channel Performance Summary */}
         <ChartCard title="Channel Performance" description="Top performing marketing channels">
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {enhancedChannelData.slice(0, 5).map((channel, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
+                className="flex items-center justify-between p-2 sm:p-3 rounded-lg bg-muted/30 hover:bg-muted/50 transition-colors"
               >
                 <div className="flex items-center gap-3">
                   <div className="h-4 w-4 rounded-full" style={{ backgroundColor: channel.fill }} />
-                  <span className="font-medium">{channel.name}</span>
+                  <span className="font-medium text-sm sm:text-base">{channel.name}</span>
                 </div>
                 <div className="text-right">
-                  <div className="font-bold">{channel.value.toLocaleString()}</div>
+                  <div className="font-bold text-sm sm:text-base">{channel.value.toLocaleString()}</div>
                   <div className="text-sm text-muted-foreground">{channel.percentage}%</div>
                 </div>
               </div>

@@ -19,20 +19,20 @@ interface ChartCardProps {
 export function ChartCard({ title, description, children, className = "", onRefresh, onExport }: ChartCardProps) {
   return (
     <Card
-      className={`relative transition-all duration-300 hover:shadow-2xl border bg-card backdrop-blur-md shadow-lg ${className}`}
+      className={`relative transition-all duration-300 hover:shadow-2xl border bg-card backdrop-blur-md shadow-lg overflow-hidden ${className}`}
     >
       <div className="absolute inset-0 bg-gradient-to-br from-background/20 to-transparent rounded-lg" />
-      <CardHeader className="pb-4 relative z-10">
+      <CardHeader className="pb-3 sm:pb-4 relative z-10 p-4 sm:p-6">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <CardTitle className="text-xl font-semibold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent">
+            <CardTitle className="text-lg sm:text-xl font-semibold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent leading-tight">
               {title}
             </CardTitle>
-            {description && <CardDescription className="text-sm">{description}</CardDescription>}
+            {description && <CardDescription className="text-xs sm:text-sm">{description}</CardDescription>}
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="opacity-70 hover:opacity-100 transition-opacity">
+              <Button variant="ghost" size="sm" className="opacity-70 hover:opacity-100 transition-opacity h-8 w-8 p-0">
                 <MoreHorizontal className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -54,7 +54,7 @@ export function ChartCard({ title, description, children, className = "", onRefr
           </DropdownMenu>
         </div>
       </CardHeader>
-      <CardContent className="p-6 relative z-10 bg-background/30 rounded-lg">{children}</CardContent>
+      <CardContent className="p-3 sm:p-4 md:p-6 relative z-10 bg-background/30 rounded-lg">{children}</CardContent>
     </Card>
   )
 }

@@ -76,18 +76,18 @@ export function LiveChart({
 
   return (
     <Card className={`transition-all duration-300 hover:shadow-lg ${className}`}>
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-3 p-4 sm:p-6">
         <div className="flex items-center justify-between">
           <div className="space-y-1">
-            <CardTitle className="text-lg font-semibold flex items-center gap-2">
+            <CardTitle className="text-base sm:text-lg font-semibold flex items-center gap-2">
               <Activity
                 className={`h-4 w-4 ${isUpdating ? "animate-pulse text-green-500" : "text-muted-foreground"}`}
               />
               {title}
             </CardTitle>
-            <CardDescription>{description}</CardDescription>
+            <CardDescription className="text-xs sm:text-sm">{description}</CardDescription>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 sm:gap-2">
             <Badge variant={isEnabled ? "default" : "secondary"} className="text-xs">
               {isEnabled ? "Live" : "Paused"}
             </Badge>
@@ -101,16 +101,16 @@ export function LiveChart({
         </div>
       </CardHeader>
 
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-6">
         {/* Metric selector */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1 sm:gap-2 overflow-x-auto pb-2">
           {Object.entries(chartConfig).map(([key, config]) => (
             <Button
               key={key}
               variant={selectedMetric === key ? "default" : "outline"}
               size="sm"
               onClick={() => setSelectedMetric(key as any)}
-              className="text-xs"
+              className="text-xs whitespace-nowrap"
             >
               {config.label}
             </Button>
@@ -121,48 +121,48 @@ export function LiveChart({
         {chartData.length > 0 && (
           <div className="flex items-center gap-4">
             <div>
-              <div className="text-2xl font-bold" style={{ color: getMetricColor() }}>
+              <div className="text-lg sm:text-xl md:text-2xl font-bold" style={{ color: getMetricColor() }}>
                 {selectedMetric === "revenue"
                   ? `$${getMetricValue(chartData[chartData.length - 1]).toLocaleString()}`
                   : getMetricValue(chartData[chartData.length - 1]).toLocaleString()}
               </div>
-              <div className="text-sm text-muted-foreground">Current {getMetricLabel()}</div>
+              <div className="text-xs sm:text-sm text-muted-foreground">Current {getMetricLabel()}</div>
             </div>
             {trend !== 0 && (
-              <div className={`flex items-center gap-1 text-sm ${trend > 0 ? "text-green-600" : "text-red-600"}`}>
+              <div className={`flex items-center gap-1 text-xs sm:text-sm ${trend > 0 ? "text-green-600" : "text-red-600"}`}>
                 <span>{trend > 0 ? "↗" : "↘"}</span>
                 <span>{Math.abs(trend)}</span>
-                <span className="text-muted-foreground">vs last</span>
+                <span className="text-muted-foreground hidden sm:inline">vs last</span>
               </div>
             )}
           </div>
         )}
 
         {/* Chart */}
-        <div className="h-64">
+        <div className="h-48 sm:h-56 md:h-64">
           {chartData.length === 0 ? (
             <div className="flex items-center justify-center h-full text-muted-foreground">
               <div className="text-center">
                 <Activity className="h-8 w-8 mx-auto mb-2 opacity-50" />
-                <p className="text-sm">Waiting for data...</p>
+                <p className="text-xs sm:text-sm">Waiting for data...</p>
               </div>
             </div>
           ) : (
             <ChartContainer config={chartConfig} className="h-full w-full">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={chartData} margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
+                <LineChart data={chartData} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
                   <XAxis
                     dataKey="time"
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
+                    tick={{ fontSize: 9, fill: "hsl(var(--muted-foreground))" }}
                     interval="preserveStartEnd"
                   />
                   <YAxis
                     axisLine={false}
                     tickLine={false}
-                    tick={{ fontSize: 10, fill: "hsl(var(--muted-foreground))" }}
-                    width={40}
+                    tick={{ fontSize: 9, fill: "hsl(var(--muted-foreground))" }}
+                    width={35}
                   />
                   <ChartTooltip
                     content={<ChartTooltipContent />}
